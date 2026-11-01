@@ -1,0 +1,9 @@
+path: C:\Users\ELCOT\Desktop\project\ml\dataset
+train: train/images
+val: val/images
+test: test/images
+names:
+  0: pothole
+  1: crack
+  2: animal
+nc: 3

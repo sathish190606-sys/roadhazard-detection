@@ -1,0 +1,98 @@
+services:
+  # Mosquitto MQTT Broker
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: roadbot-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  # Oracle PL/SQL Database (Oracle Database 23ai Free)
+  oracle:
+    image: gvenzl/oracle-free:latest
+    container_name: roadbot-oracle
+    restart: unless-stopped
+    environment:
+      ORACLE_PASSWORD: roadbot_pass
+      APP_USER: roadbot
+      APP_USER_PASSWORD: roadbot_pass
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./database/oracle_plsql:/container-entrypoint-initdb.d
+
+  # PostgreSQL Database (Alternative relational database)
+  postgres:
+    image: postgres:15-alpine
+    container_name: roadbot-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: roadbot
+      POSTGRES_PASSWORD: roadbot_pass
+      POSTGRES_DB: roadbot_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/postgres_plpgsql:/docker-entrypoint-initdb.d
+
+  # FastAPI Cloud Server & MQTT Ingestion
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: roadbot-backend
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://roadbot:roadbot_pass@postgres:5432/roadbot_db
+      MQTT_BROKER_HOST: mosquitto
+      MQTT_BROKER_PORT: 1883
+      ROBOT_API_KEY: robot-sec-key-771ac-roadbot-edge-2026
+      SECRET_KEY: super-secret-development-jwt-key-change-in-production
+      ALERT_SEVERITY_THRESHOLD: "75.0"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+
+  # React + Vite Dashboard
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: roadbot-dashboard
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+  # Route & Hazard Simulator
+  simulator:
+    build:
+      context: ./simulator
+      dockerfile: Dockerfile
+    container_name: roadbot-simulator
+    restart: "no"
+    depends_on:
+      - backend
+      - mosquitto
+    environment:
+      BACKEND_URL: http://backend:8000
+      MQTT_BROKER_HOST: mosquitto
+      MQTT_BROKER_PORT: 1883
+      ROBOT_API_KEY: robot-sec-key-771ac-roadbot-edge-2026
+      SIM_SPEED_MULTIPLIER: "1.0"
+
+volumes:
+  postgres_data:
+  oracle_data:

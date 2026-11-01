@@ -1,0 +1,64 @@
+robot:
+  id: "robot-01"
+  mode: "simulation"        # "hardware" or "simulation"
+  device: "raspberry_pi"    # "raspberry_pi" or "jetson"
+  debug_overlay: false      # set true to display debug frame with OpenCV
+
+navigation:
+  min_obstacle_distance_cm: 30.0   # Stop and avoid if distance < 30 cm
+  backup_duration_sec: 0.6         # Time to reverse during avoidance
+  turn_duration_sec: 1.0           # Time to steer during avoidance
+  patrol_speed_pwm: 70             # PWM speed (0-100)
+  avoidance_speed_pwm: 50          # PWM speed during avoidance
+  watchdog_timeout_sec: 0.5        # Max loop delay before emergency motor cutoff
+  waypoints:
+    - [12.971600, 77.594600]
+    - [12.971750, 77.595100]
+    - [12.972150, 77.595750]
+    - [12.972750, 77.595800]
+    - [12.973350, 77.595000]
+    - [12.973100, 77.593850]
+    - [12.972100, 77.593600]
+
+detector:
+  model_path: "ml/weights/yolov8n.pt"
+  confidence_threshold: 0.50
+  save_cropped_snapshot: true
+  classes:
+    0: "pothole"
+    1: "crack"
+    2: "animal"
+  dedup:
+    distance_threshold_m: 5.0      # Ignore repeated detection within 5 meters
+    time_window_sec: 10.0          # Ignore repeated detection within 10 seconds
+
+hardware:
+  motors:
+    # L298N Dual H-Bridge Motor Driver GPIO Pinout (BCM)
+    in1: 17     # Left motors forward
+    in2: 27     # Left motors reverse
+    ena: 12     # Left motors PWM speed enable
+    in3: 22     # Right motors forward
+    in4: 23     # Right motors reverse
+    enb: 13     # Right motors PWM speed enable
+  ultrasonic:
+    # HC-SR04 Sensors GPIO (BCM)
+    front_trig: 5
+    front_echo: 6
+    left_trig: 19
+    left_echo: 26
+    right_trig: 16
+    right_echo: 20
+  gps:
+    port: "/dev/ttyAMA0"
+    baudrate: 9600
+    timeout: 1.0
+  esp32_uart:
+    port: "/dev/ttyUSB0"
+    baudrate: 115200
+    timeout: 1.0
+    ack_timeout_sec: 2.0
+    max_retries: 3
+
+storage:
+  db_path: "robot_events.db"

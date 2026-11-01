@@ -1,0 +1,72 @@
+[
+  {
+    "id": 5,
+    "robot_id": "user:sathish1234",
+    "hazard_class": "pothole",
+    "confidence": 0.85,
+    "latitude": 11.677368445796796,
+    "longitude": 78.12397053270043,
+    "severity_score": 71.25,
+    "cluster_count": 1,
+    "status": "acknowledged",
+    "reported_by": "sathish1234",
+    "created_at": "2026-10-31 11:13:54.306004",
+    "updated_at": "2026-10-31 11:14:43.279256"
+  },
+  {
+    "id": 4,
+    "robot_id": "user:sathish1234",
+    "hazard_class": "pothole",
+    "confidence": 0.85,
+    "latitude": 11.677256811241476,
+    "longitude": 78.12396291949176,
+    "severity_score": 71.25,
+    "cluster_count": 1,
+    "status": "repaired",
+    "reported_by": "sathish1234",
+    "created_at": "2026-10-31 09:21:11.509283",
+    "updated_at": "2026-10-31 09:36:22.573442"
+  },
+  {
+    "id": 3,
+    "robot_id": "user:admin",
+    "hazard_class": "pothole",
+    "confidence": 0.85,
+    "latitude": 11.67704798883496,
+    "longitude": 78.12397300997037,
+    "severity_score": 71.25,
+    "cluster_count": 1,
+    "status": "repaired",
+    "reported_by": "admin",
+    "created_at": "2026-10-31 07:26:16.655491",
+    "updated_at": "2026-10-31 09:36:13.363252"
+  },
+  {
+    "id": 2,
+    "robot_id": "user:sathish1234",
+    "hazard_class": "pothole",
+    "confidence": 0.85,
+    "latitude": 11.674905908400747,
+    "longitude": 78.11159345496851,
+    "severity_score": 71.25,
+    "cluster_count": 1,
+    "status": "repaired",
+    "reported_by": "sathish1234",
+    "created_at": "2026-10-31 06:49:59.791700",
+    "updated_at": "2026-10-31 09:36:15.251559"
+  },
+  {
+    "id": 1,
+    "robot_id": "user:sathish1234",
+    "hazard_class": "pothole",
+    "confidence": 0.85,
+    "latitude": 11.674230840996348,
+    "longitude": 78.11210062926004,
+    "severity_score": 71.25,
+    "cluster_count": 1,
+    "status": "repaired",
+    "reported_by": "sathish1234",
+    "created_at": "2026-10-31 04:20:08.954563",
+    "updated_at": "2026-10-31 09:36:16.303103"
+  }
+]

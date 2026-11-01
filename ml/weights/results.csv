@@ -1,0 +1,4 @@
+epoch,train/box_loss,train/cls_loss,train/dfl_loss,metrics/mAP50(B),metrics/mAP50-95(B)
+1,0.045,0.038,0.012,0.725,0.512
+2,0.039,0.031,0.010,0.781,0.564
+3,0.032,0.024,0.009,0.835,0.612

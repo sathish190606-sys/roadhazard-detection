@@ -1,0 +1,34 @@
+{
+  "weights": "ml/weights/best.pt",
+  "dataset": "ml/dataset/data.yaml",
+  "split": "test",
+  "classes": [
+    {
+      "class": "pothole",
+      "precision": 0.884,
+      "recall": 0.841,
+      "mAP50": 0.872,
+      "mAP50_95": 0.638
+    },
+    {
+      "class": "crack",
+      "precision": 0.821,
+      "recall": 0.793,
+      "mAP50": 0.815,
+      "mAP50_95": 0.584
+    },
+    {
+      "class": "animal",
+      "precision": 0.912,
+      "recall": 0.895,
+      "mAP50": 0.908,
+      "mAP50_95": 0.695
+    }
+  ],
+  "overall": {
+    "precision": 0.8723,
+    "recall": 0.843,
+    "mAP50": 0.865,
+    "mAP50_95": 0.639
+  }
+}
