@@ -32,9 +32,15 @@ elif "oracle" in db_url:
     engine_kwargs["max_overflow"] = 20
     engine_kwargs["pool_recycle"] = 3600
 elif "postgres" in db_url:
+    connect_args["connect_timeout"] = 15
+    connect_args["keepalives"] = 1
+    connect_args["keepalives_idle"] = 30
+    connect_args["keepalives_interval"] = 10
+    connect_args["keepalives_count"] = 5
+    engine_kwargs["connect_args"] = connect_args
     engine_kwargs["pool_size"] = 10
     engine_kwargs["max_overflow"] = 20
-    engine_kwargs["pool_recycle"] = 3600
+    engine_kwargs["pool_recycle"] = 300
 
 engine = create_engine(db_url, **engine_kwargs)
 
